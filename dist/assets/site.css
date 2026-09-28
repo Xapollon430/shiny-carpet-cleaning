@@ -34,7 +34,7 @@ a { color: inherit; }
 .cinematic h1 em { --framer-font-family: "Instrument Serif", "Instrument Serif Placeholder", serif; font-family: var(--framer-font-family); font-style: italic; font-weight: 400; letter-spacing: .01em; }
 .cinematic .hero-intro { max-width: 42rem; margin: 1.8rem 0 0; font-size: clamp(1.05rem,1.5vw,1.35rem); line-height: 1.5; color: rgba(255,255,255,.84); opacity: 0; transform: translateY(36px); animation: support-rise .9s .62s cubic-bezier(.16,1,.3,1) forwards; }
 .cinematic .hero-actions { display: flex; justify-content: center; gap: .75rem; margin-top: 2rem; opacity: 0; transform: translateY(32px); animation: support-rise .9s .76s cubic-bezier(.16,1,.3,1) forwards; }
-.cinematic .carpet-clean-cta { --vacuum-start: calc(100% - 3rem); --vacuum-end: 0; --vacuum-duration: 1.8s; --cleaning-end: calc(var(--vacuum-duration) + .25s); --celebration-start: calc(var(--vacuum-duration) + .75s); position: relative; isolation: isolate; overflow: hidden; min-width: 15rem; padding: .8rem 4rem .8rem 1.4rem; justify-content: flex-start; }
+.cinematic .carpet-clean-cta { --vacuum-start: calc(100% - 3rem); --vacuum-end: 0; --vacuum-duration: 1.8s; --cleaning-end: calc(var(--vacuum-duration) + .25s); --celebration-start: calc(var(--vacuum-duration) + .75s); position: relative; isolation: isolate; overflow: hidden; min-width: 15rem; padding: .8rem 4rem .8rem 1.4rem; justify-content: flex-start; border-radius: 5px; }
 .cinematic .carpet-clean-cta:hover { transform: none; }
 .cinematic .carpet-clean-cta .cta-label { position: relative; z-index: 4; transition: transform .25s cubic-bezier(.2,.8,.2,1), opacity .2s ease; }
 .cinematic .vacuum-icon { position: absolute; z-index: 5; left: var(--vacuum-start); bottom: 50%; width: 2rem; height: 2rem; object-fit: contain; filter: brightness(0) invert(1); transform: translateY(50%); transition: bottom .3s cubic-bezier(.2,.8,.2,1), transform .3s cubic-bezier(.2,.8,.2,1); }
@@ -64,8 +64,7 @@ a { color: inherit; }
 .cinematic .carpet-clean-cta:is(:hover,:focus-visible) .sparkle-left { animation-delay: calc(var(--celebration-start) + .1s); }
 .cinematic .carpet-clean-cta:is(:hover,:focus-visible) .sparkle-right { animation-delay: calc(var(--celebration-start) + .2s); }
 .cinematic .cta.secondary { border-color: rgba(255,255,255,.78); color: #fff; background: rgba(4,13,23,.16); backdrop-filter: blur(10px); }
-.cinematic .cta.secondary:hover { background: #fff; color: #102335; }
-.cinematic .carpet-clean-cta.secondary:hover { background: rgba(4,13,23,.16); color: #fff; }
+.cinematic .cta.secondary:hover { background: rgba(4,13,23,.16); color: #fff; }
 @keyframes vacuum-clean-pass { to { left: var(--vacuum-end); } }
 @keyframes carpet-clean-pass { to { clip-path: inset(0 0 0 var(--vacuum-end)); } }
 @keyframes cleaning-tools-exit { to { opacity: 0; } }
