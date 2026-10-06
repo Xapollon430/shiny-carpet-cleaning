@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://shinycarpetcleaning.com/sitemap.xml
+Sitemap: https://shiny-carpet-cleaning-va.netlify.app/sitemap.xml
