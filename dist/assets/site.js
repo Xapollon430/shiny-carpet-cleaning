@@ -111,9 +111,13 @@ if (heroCleaner && heroReviews && heroReviewProof) {
 
 const serviceMapElement = document.querySelector('#service-map');
 if (serviceMapElement && window.L) {
+  const usesCoarsePointer = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
   const serviceMap = L.map(serviceMapElement, {
+    dragging: !usesCoarsePointer,
     scrollWheelZoom: false,
-    zoomControl: false
+    zoomControl: false,
+    tap: !usesCoarsePointer,
+    touchZoom: true
   }).setView([38.895, -77.10], 9);
   serviceMap.attributionControl.setPrefix(false);
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -143,6 +147,24 @@ if (serviceMapElement && window.L) {
     bounds.push([lat,lng]);
   });
   serviceMap.setView([38.90, -77.12], 10);
+
+  if (usesCoarsePointer) {
+    const mapShell = serviceMapElement.closest('.map-shell');
+    let hintTimer;
+    const hideGestureHint = () => mapShell?.classList.remove('is-gesture-hint');
+    serviceMapElement.addEventListener('touchstart', (event) => {
+      window.clearTimeout(hintTimer);
+      if (event.touches.length > 1) {
+        hideGestureHint();
+        return;
+      }
+      mapShell?.classList.add('is-gesture-hint');
+      hintTimer = window.setTimeout(hideGestureHint, 1200);
+    }, { passive: true });
+    serviceMapElement.addEventListener('touchend', () => {
+      hintTimer = window.setTimeout(hideGestureHint, 700);
+    }, { passive: true });
+  }
 }
 
 const galleryDialog = document.querySelector('.gallery-lightbox');

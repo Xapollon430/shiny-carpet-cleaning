@@ -6,7 +6,7 @@
   <title>Shiny Carpet Cleaning — Make every corner shiny</title>
   <meta name="description" content="Professional carpet, rug, upholstery, floor, and home cleaning backed by more than 20 years of experience across the DMV.">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="/assets/site.css?v=101"><!-- SEO:META -->
+  <link rel="stylesheet" href="/assets/site.css?v=102"><!-- SEO:META -->
   <link rel="canonical" href="https://shiny-carpet-cleaning-va.netlify.app/">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta property="og:locale" content="en_US">
@@ -152,7 +152,7 @@
 
     <section class="service-area-section" id="about">
       <div class="map-heading reveal"><h2>Places we operate</h2><a class="locations-link" href="/locations/">View all service areas ↗</a></div>
-      <div class="map-shell reveal"><div id="service-map" aria-label="Map of Shiny Carpet Cleaning service areas"></div><div class="map-key"><strong>20+ years across the DMV</strong><span>Select a pin to see a service area.</span></div></div>
+      <div class="map-shell reveal"><div id="service-map" aria-label="Map of Shiny Carpet Cleaning service areas"></div><div class="map-gesture-hint" aria-hidden="true"><span>Use two fingers to move the map</span></div><div class="map-key"><strong>20+ years across the DMV</strong><span>Select a pin to see a service area.</span></div></div>
     </section>
 
     <section class="estimate-section" id="form">
@@ -171,6 +171,7 @@
         <div class="field"><label for="estimate-state">State</label><input id="estimate-state" name="state" autocomplete="address-level1" value="VA"></div>
         <div class="field field-wide"><label for="estimate-zip">ZIP code</label><input id="estimate-zip" name="zip" inputmode="numeric" autocomplete="postal-code"></div>
         <div class="field field-wide"><label for="estimate-service">Service</label><select id="estimate-service" name="service" required><option value="" selected disabled>Choose a service</option><option>Carpet cleaning</option><option>Area rug cleaning</option><option>Upholstery cleaning</option><option>Window cleaning</option><option>Power washing</option><option>Mattress cleaning</option><option>Tile &amp; grout cleaning</option><option>House cleaning</option><option>Move-in/out cleaning</option><option>Duct cleaning</option><option>Pet stain &amp; odor removal</option><option>Floor cleaning</option><option>Dryer vent services</option><option>Grout color sealing</option><option>Junk removal</option><option>Leaf blowing and raking</option><option>Snow shoveling and removal</option></select></div>
+        <div class="field field-wide"><label for="estimate-details">House details and cleaning notes</label><textarea id="estimate-details" name="details" rows="5" placeholder="Tell us about the rooms, surfaces, stains, pets, access, parking, or anything else we should know."></textarea></div>
         <label class="estimate-consent field-wide"><input type="checkbox" name="consent" required><span>I confirm that I want to receive messages from Shiny Carpet Cleaning using the contact information provided.</span></label>
         <div class="estimate-form-footer field-wide"><button type="submit">Get free estimate <span aria-hidden="true">↗</span></button><p class="form-status" data-form-status aria-live="polite"></p></div>
       </form>
@@ -212,6 +213,6 @@
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="/assets/site.js?v=53"></script>
+  <script src="/assets/site.js?v=54"></script>
 </body>
 </html>

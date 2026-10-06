@@ -19,8 +19,8 @@ def update_page(path: Path) -> None:
         source,
     )
     source = re.sub(r"https?://(?:www\.)?shinycarpetcleaning\.com", "", source)
-    source = re.sub(r"(?<![\w/])/?assets/site\.css\?v=\d+", "/assets/site.css?v=101", source)
-    source = re.sub(r"(?<![\w/])/?assets/site\.js\?v=\d+", "/assets/site.js?v=53", source)
+    source = re.sub(r"(?<![\w/])/?assets/site\.css\?v=\d+", "/assets/site.css?v=102", source)
+    source = re.sub(r"(?<![\w/])/?assets/site\.js\?v=\d+", "/assets/site.js?v=54", source)
     path.write_text(source)
 
 
