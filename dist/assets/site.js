@@ -53,6 +53,7 @@ document.querySelectorAll('.primary-nav a').forEach((link) => {
 
 document.querySelectorAll('.service-card').forEach((card) => {
   card.addEventListener('click', () => {
+    if (card.matches('a[href]')) return;
     const flipped = !card.classList.contains('is-flipped');
     card.classList.toggle('is-flipped', flipped);
     card.setAttribute('aria-pressed', String(flipped));

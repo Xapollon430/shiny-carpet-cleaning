@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
 SITE = os.environ.get("SITE_URL", "http://127.0.0.1:4173").rstrip("/")
 DEFAULT_IMAGE = f"{SITE}/assets/about/real-carpet-cleaning-hero.webp"
+HOME_SHARE_IMAGE = f"{SITE}/assets/shiny-social-share.png"
 TODAY = date.today().isoformat()
 HOME_FAQS = [
     (
@@ -61,8 +62,21 @@ def absolute_asset(src: str | None) -> str:
     return SITE + "/" + src.lstrip("/")
 
 
-def meta_block(title: str, description: str, url: str, image: str, page_type: str) -> str:
+def meta_block(
+    title: str,
+    description: str,
+    url: str,
+    image: str,
+    page_type: str,
+    image_alt: str,
+    image_dimensions: tuple[int, int] | None = None,
+) -> str:
     esc = html.escape
+    image_size_meta = ""
+    if image_dimensions:
+        width, height = image_dimensions
+        image_size_meta = f'''\n  <meta property="og:image:width" content="{width}">
+  <meta property="og:image:height" content="{height}">'''
     return f'''<!-- SEO:META -->
   <link rel="canonical" href="{esc(url)}">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
@@ -72,8 +86,8 @@ def meta_block(title: str, description: str, url: str, image: str, page_type: st
   <meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(description)}">
   <meta property="og:url" content="{esc(url)}">
-  <meta property="og:image" content="{esc(image)}">
-  <meta property="og:image:alt" content="Shiny Carpet Cleaning professional cleaning service">
+  <meta property="og:image" content="{esc(image)}">{image_size_meta}
+  <meta property="og:image:alt" content="{esc(image_alt)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{esc(title)}">
   <meta name="twitter:description" content="{esc(description)}">
@@ -113,13 +127,12 @@ def structured_block(path: Path, source: str, route: str, title: str, descriptio
                 "foundingDate": "2006",
                 "address": {
                     "@type": "PostalAddress",
-                    "streetAddress": "7627B Fullerton Rd., Suite B",
-                    "addressLocality": "Springfield",
+                    "streetAddress": "7202 Lockport Pl",
+                    "addressLocality": "Lorton",
                     "addressRegion": "VA",
-                    "postalCode": "22153",
+                    "postalCode": "22079",
                     "addressCountry": "US",
                 },
-                "geo": {"@type": "GeoCoordinates", "latitude": 38.7893, "longitude": -77.1872},
                 "openingHoursSpecification": [{
                     "@type": "OpeningHoursSpecification",
                     "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -172,12 +185,14 @@ def apply_to_page(path: Path) -> None:
         source = re.sub(r"<title>.*?</title>", f"<title>{html.escape(title)}</title>", source, count=1, flags=re.I | re.S)
     description = text_value(source, r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', "Professional cleaning services across DC, Maryland, and Virginia.")
     hero_match = re.search(r'class=["\'][^"\']*(?:article-hero-image|about-hero-image)[^"\']*["\'][^>]+src=["\']([^"\']+)', source, re.I)
-    image = absolute_asset(hero_match.group(1) if hero_match else None)
+    image = HOME_SHARE_IMAGE if route == "/" else absolute_asset(hero_match.group(1) if hero_match else None)
+    image_alt = "Shiny Carpet Cleaning logo" if route == "/" else "Shiny Carpet Cleaning professional cleaning service"
+    image_dimensions = (1200, 630) if route == "/" else None
     url = SITE + route
     page_type = "article" if "article-body" in source else "website"
     source = re.sub(r'\s*<!-- SEO:META -->.*?<!-- /SEO:META -->', '', source, flags=re.S)
     source = re.sub(r'\s*<!-- SEO:STRUCTURED -->.*?<!-- /SEO:STRUCTURED -->', '', source, flags=re.S)
-    meta = meta_block(title, description, url, image, page_type)
+    meta = meta_block(title, description, url, image, page_type, image_alt, image_dimensions)
     structured = structured_block(path, source, route, title, description, image)
     source = source.replace("</head>", f"{meta}{structured}</head>", 1)
     path.write_text(source)

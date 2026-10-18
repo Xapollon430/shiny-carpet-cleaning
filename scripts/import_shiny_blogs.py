@@ -112,22 +112,22 @@ def download_image(post: dict) -> tuple[str, str | None]:
 
 
 HEADER = '''<header class="site-header inner-header is-scrolled" data-site-header><div class="nav-shell">
-  <a class="site-logo" href="/" aria-label="Shiny Carpet Cleaning home"><img class="brand-logo invert" src="/assets/shiny-logo.png" alt="Shiny Carpet Cleaning"></a>
+  <a class="site-logo" href="/" aria-label="Shiny Carpet Cleaning home"><img class="brand-logo" src="/assets/brand/shiny-logo-full-reversed.svg" alt="Shiny Carpet Cleaning"></a>
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span class="sr-only">Open navigation</span></button>
-  <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation"><a class="nav-link" href="/services/">Our services</a><div class="nav-company"><button class="nav-link company-trigger" type="button" aria-expanded="false">Company <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1 5 5 5-5"/></svg></button><div class="nav-dropdown"><a href="/about/">About us</a><a href="/locations/">Locations</a><a href="/careers/">Careers</a><a href="/blogs/">Blogs</a></div></div><a class="nav-link" href="/gallery/">Gallery</a><a class="nav-link" href="/contact/">Contact</a></nav>
+  <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation"><a class="nav-link" href="/services/">Our services</a><div class="nav-company"><button class="nav-link company-trigger" type="button" aria-expanded="false">Company <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1 5 5 5-5"/></svg></button><div class="nav-dropdown"><a href="/about/">About us</a><a href="/locations/">Service areas</a><a href="/careers/">Careers</a><a href="/blogs/">Blogs</a></div></div><a class="nav-link" href="/gallery/">Gallery</a><a class="nav-link" href="/contact/">Contact</a></nav>
   <a class="header-phone" href="tel:7039759099"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><span>(703) 975-9099</span></a>
 </div></header>'''
 
 FOOTER = '''<footer class="site-footer" id="contact"><div class="footer-main">
-  <div class="footer-brand"><img class="brand-logo invert" src="/assets/shiny-logo.png" alt="Shiny Carpet Cleaning"><p>Family-run cleaning and restoration services for homes across the Greater DC Metro Area.</p></div>
-  <div class="footer-column"><h2>Contact</h2><a href="https://maps.app.goo.gl/76dYgTyyS3PcNsuc6">7627B Fullerton Rd.<br>Suite B<br>Springfield, VA 22153</a><a href="tel:7039759099">(703) 975-9099</a><a href="mailto:info@shinycarpetcleaning.com">info@shinycarpetcleaning.com</a></div>
+  <div class="footer-brand"><img class="brand-logo footer-logo-horizontal" src="/assets/brand/shiny-logo-horizontal-reversed.svg" alt="Shiny Carpet Cleaning"><p>Family-run cleaning and restoration services for homes across the Greater DC Metro Area.</p></div>
+  <div class="footer-column"><h2>Contact</h2><a href="https://www.google.com/maps/search/?api=1&amp;query=7202+Lockport+Pl%2C+Lorton%2C+VA+22079">7202 Lockport Pl<br>Lorton, VA 22079</a><a href="tel:7039759099">(703) 975-9099</a><a href="mailto:info@shinycarpetcleaning.com">info@shinycarpetcleaning.com</a></div>
   <div class="footer-column"><h2>Hours</h2><p>Monday–Saturday<br>8:00am–6:00pm</p><a href="https://book.housecallpro.com/book/Shiny-Carpet-Cleaning/66764a3c1a034ac0b96136517e678511">Book online</a><a href="/#form">Request an estimate</a></div>
   <div class="footer-column"><h2>Company</h2><a href="/about/">About us</a><a href="/careers/">Careers</a><a href="/blogs/">Blogs</a><a href="/gallery/">Gallery</a></div>
-</div><div class="footer-bottom"><span>© 2026 Shiny Carpet Cleaning. All rights reserved.</span></div></footer>'''
+</div><div class="footer-bottom"><span class="footer-copyright"><img class="footer-symbol" src="/assets/brand/shiny-symbol.svg" alt="" aria-hidden="true"><span>© 2026 Shiny Carpet Cleaning. All rights reserved.</span></span></div></footer>'''
 
 
 def document(title: str, description: str, body: str, body_class: str) -> str:
-    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} — Shiny Carpet Cleaning</title><meta name="description" content="{html.escape(description, quote=True)}"><link rel="stylesheet" href="/assets/site.css?v=45"></head><body class="inner-page {body_class}">{HEADER}<main id="main">{body}</main>{FOOTER}<script src="/assets/site.js?v=45"></script></body></html>'''
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} — Shiny Carpet Cleaning</title><meta name="description" content="{html.escape(description, quote=True)}"><link rel="stylesheet" href="/assets/site.css?v=125"></head><body class="inner-page {body_class}">{HEADER}<main id="main">{body}</main>{FOOTER}<script src="/assets/site.js?v=45"></script></body></html>'''
 
 
 def card(post: dict, image: str | None) -> str:
