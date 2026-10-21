@@ -148,7 +148,7 @@ def footer_markup() -> str:
 def service_page(service: dict) -> str:
     title = f"{service['name']} in the DMV — Shiny Carpet Cleaning"
     description = service["summary"]
-    canonical = f"https://shiny-carpet-cleaning-va.netlify.app/services/{service['slug']}/"
+    canonical = f"https://shiny-carpet-cleaning.exe.xyz/services/{service['slug']}/"
     structured = {
         "@context": "https://schema.org",
         "@type": "Service",
@@ -160,7 +160,7 @@ def service_page(service: dict) -> str:
     }
     benefits = "".join(f"<li>{html.escape(item)}</li>" for item in service["benefits"])
     return f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)}</title><meta name="description" content="{html.escape(description)}"><link rel="stylesheet" href="/assets/site.css?v=125"><link rel="canonical" href="{canonical}"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:site_name" content="Shiny Carpet Cleaning"><meta property="og:title" content="{html.escape(title)}"><meta property="og:description" content="{html.escape(description)}"><meta property="og:url" content="{canonical}"><meta property="og:image" content="https://shiny-carpet-cleaning-va.netlify.app/assets/services/{service['image']}"><meta name="theme-color" content="#213B5C"><link rel="icon" href="/assets/shiny-favicon.png?v=1" type="image/png"><script type="application/ld+json">{json.dumps(structured)}</script></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)}</title><meta name="description" content="{html.escape(description)}"><link rel="stylesheet" href="/assets/site.css?v=125"><link rel="canonical" href="{canonical}"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:site_name" content="Shiny Carpet Cleaning"><meta property="og:title" content="{html.escape(title)}"><meta property="og:description" content="{html.escape(description)}"><meta property="og:url" content="{canonical}"><meta property="og:image" content="https://shiny-carpet-cleaning.exe.xyz/assets/services/{service['image']}"><meta name="theme-color" content="#213B5C"><link rel="icon" href="/assets/shiny-favicon.png?v=1" type="image/png"><script type="application/ld+json">{json.dumps(structured)}</script></head>
 <body class="inner-page service-detail-page">
   <a class="skip" href="#main">Skip to content</a>
   {header_markup()}
@@ -216,11 +216,11 @@ def refresh_sitemap():
     path = DIST / "sitemap.xml"
     text = path.read_text()
     rows = "\n".join(
-        f'  <url><loc>https://shiny-carpet-cleaning-va.netlify.app/services/{service["slug"]}/</loc><lastmod>2026-10-08</lastmod><priority>0.9</priority></url>'
+        f'  <url><loc>https://shiny-carpet-cleaning.exe.xyz/services/{service["slug"]}/</loc><lastmod>2026-10-08</lastmod><priority>0.9</priority></url>'
         for service in SERVICES
     )
     text = re.sub(
-        r'\n  <url><loc>https://shiny-carpet-cleaning-va\.netlify\.app/services/(?!</loc>).*?</url>',
+        r'\n  <url><loc>https://shiny-carpet-cleaning\.exe\.xyz/services/(?!</loc>).*?</url>',
         '',
         text,
     )

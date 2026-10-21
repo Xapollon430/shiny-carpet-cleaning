@@ -1723,3 +1723,17 @@ section, footer { scroll-margin-top: 5.5rem; }
   background: rgba(0,0,0,.54);
   filter: blur(32px);
 }
+
+/* Landing header call link remains recognizable without the printed number. */
+.cinematic .header-call span { text-decoration: underline; text-underline-offset: .25em; text-decoration-thickness: 1px; }
+.cinematic .header-call:hover,.cinematic .header-call:focus-visible { background: rgba(255,255,255,.1); }
+
+/* Match the homepage services heading to the services catalog. */
+.cinematic #services .services-title h2 { font-size: clamp(2.5rem,5vw,5.25rem); }
+.about-page .team-card { display: block; }
+
+/* Keep the landing trust points readable at tablet and phone widths. */
+.cinematic .home-landing .hero-message .hero-trust-list li { font-size: clamp(.95rem,1.4vw,1.1rem); line-height: 1.4; }
+@media (max-width: 480px) {
+  .cinematic .home-landing .hero-message .hero-trust-list { grid-template-columns: 1fr; gap: .45rem; }
+}

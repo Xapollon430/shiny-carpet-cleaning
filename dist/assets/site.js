@@ -200,7 +200,7 @@ resumeInput?.addEventListener('change', () => {
   if (target) target.textContent = resumeInput.files?.[0]?.name || 'Choose a file';
 });
 
-const connectNetlifyForm = (form, successMessage) => {
+const connectSiteForm = (form, successMessage) => {
   if (!form) return;
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -242,7 +242,7 @@ const connectNetlifyForm = (form, successMessage) => {
   });
 };
 
-connectNetlifyForm(careerForm, 'Thanks — your application was sent to the Shiny team.');
+connectSiteForm(careerForm, 'Thanks — your application was sent to the Shiny team.');
 
 const blogGrid = document.querySelector('[data-blog-grid]');
 if (blogGrid) {
@@ -290,7 +290,7 @@ if (blogGrid) {
 }
 
 const estimateForm = document.querySelector('[data-estimate-form]');
-connectNetlifyForm(estimateForm, 'Thanks — your quote request was sent to the Shiny team.');
+connectSiteForm(estimateForm, 'Thanks — your quote request was sent to the Shiny team.');
 
 const contactForm = document.querySelector('[data-contact-form]');
-connectNetlifyForm(contactForm, 'Thanks — your message was sent to the Shiny team.');
+connectSiteForm(contactForm, 'Thanks — your message was sent to the Shiny team.');

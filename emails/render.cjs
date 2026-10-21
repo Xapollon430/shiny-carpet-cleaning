@@ -23,7 +23,7 @@ const forms = {
 };
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const emailAddress = value => /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(String(value)) ? String(value) : '';
-function renderEmail(formName, data, siteUrl = 'https://shiny-carpet-cleaning-va.netlify.app') {
+function renderEmail(formName, data, siteUrl = 'https://shiny-carpet-cleaning.exe.xyz') {
   if (data.resume && typeof data.resume === 'object') data = { ...data, resume: data.resume.url };
   const form = forms[formName];
   if (!form) throw new Error('Unknown Shiny form');

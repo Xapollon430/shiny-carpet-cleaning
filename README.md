@@ -14,11 +14,12 @@ Then open `http://127.0.0.1:4173`.
 
 ## Deployment
 
-The site is configured for Netlify with `dist` as the publish directory. Quote, contact, and career forms use Netlify Forms.
+Live site: https://shiny-carpet-cleaning.exe.xyz
 
-Set `SITE_URL` when regenerating production metadata:
+The website runs on its own exe.dev VM. Node serves the static `dist` directory and processes quote, contact and careers forms through Resend. See [server/README.md](server/README.md) for deployment, configuration and logs.
 
 ```bash
-SITE_URL=https://example.netlify.app python3 scripts/apply_seo.py
-python3 scripts/prepare_launch.py
+SITE_URL=https://shiny-carpet-cleaning.exe.xyz python3 scripts/apply_seo.py
 ```
+
+The GitHub repository is public. Keep secrets and customer submissions out of Git.

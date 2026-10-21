@@ -1,0 +1,23 @@
+[Unit]
+Description=Shiny website and form email service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=exedev
+Group=exedev
+WorkingDirectory=/home/exedev/shiny
+EnvironmentFile=/etc/shiny.env
+ExecStart=/usr/local/bin/node /home/exedev/shiny/server/server.cjs
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/shiny
+PrivateTmp=true
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
