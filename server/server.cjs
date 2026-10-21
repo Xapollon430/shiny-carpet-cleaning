@@ -57,8 +57,18 @@ const server=http.createServer(async(req,res)=>{
     if(req.method==='POST') return await submit(req,res);
     if(!['GET','HEAD'].includes(req.method)) return reply(res,405,{error:'Method not allowed'});
     let pathname=decodeURIComponent(new URL(req.url,siteUrl).pathname);
-    const redirect=redirects.get(pathname);
-    if(redirect) { res.writeHead(redirect.status,{Location:redirect.to}); return res.end(); }
+    const redirect=redirects.get(pathname) || redirects.get(pathname.endsWith('/') ? pathname : pathname+'/');
+    if(redirect) {
+      if(redirect.status===410) {
+        const body=await fs.readFile(path.join(root,'retired.html'));
+        res.writeHead(410,{'Content-Type':'text/html; charset=utf-8','Content-Length':body.length,'X-Robots-Tag':'noindex','Cache-Control':'no-cache'});
+        return res.end(req.method==='HEAD'?undefined:body);
+      }
+      const target=new URL(redirect.to,siteUrl);
+      for(const [key,value] of new URL(req.url,siteUrl).searchParams) if(!target.searchParams.has(key)) target.searchParams.append(key,value);
+      const location=redirect.to.startsWith('/') ? target.pathname+target.search+target.hash : target.href;
+      res.writeHead(redirect.status,{Location:location}); return res.end();
+    }
     if(pathname.split('/').some(part=>part.startsWith('.'))) return reply(res,404,{error:'Not found'});
     let file=path.resolve(root,'.'+pathname);
     if(!file.startsWith(root+path.sep) && file!==root) return reply(res,403,{error:'Forbidden'});

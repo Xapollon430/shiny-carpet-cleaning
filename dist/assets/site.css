@@ -1737,3 +1737,19 @@ section, footer { scroll-margin-top: 5.5rem; }
 @media (max-width: 480px) {
   .cinematic .home-landing .hero-message .hero-trust-list { grid-template-columns: 1fr; gap: .45rem; }
 }
+
+/* Preserved service, pricing and policy content from the previous website. */
+.migration-page main { background: #eef1ed; color: #10212d; }
+.migration-content { width: min(1040px,100%); margin: auto; padding: 8rem 1.5rem 4rem; }
+.migration-content h1 { margin: 0 0 2rem; font-size: clamp(2.5rem,5vw,4.5rem); font-weight: 500; line-height: 1.05; letter-spacing: -.045em; }
+.migration-prose { max-width: 850px; font-size: 1.05rem; line-height: 1.7; overflow-wrap: anywhere; }
+.migration-prose h2 { margin: 2rem 0 1rem; font-size: clamp(1.5rem,3vw,2rem); line-height: 1.2; }
+.migration-prose a,.migration-additional a { text-decoration: underline; text-underline-offset: .2em; }
+.migration-prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 1rem; }
+.migration-prose td,.migration-prose th { padding: .7rem; border-bottom: 1px solid #bdc9bf; text-align: left; }
+.migration-prose .cta { text-decoration: none; }
+.migration-additional { background: #eef1ed; color: #10212d; padding: 2rem 4vw 4rem; }
+.migration-additional h2 { font-size: clamp(2rem,3vw,3rem); font-weight: 500; }
+.migration-additional ul { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding: 1rem; }
+.footer-policy-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+@media(max-width: 600px) { .migration-content { padding-top: 11rem; } .migration-prose table { font-size: .88rem; } }

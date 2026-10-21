@@ -202,7 +202,7 @@ def write_sitemap(paths: list[Path]) -> None:
     rows = []
     for path in sorted(paths, key=route_for):
         route = route_for(path)
-        if route == "/404.html":
+        if route == "/404.html" or re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*noindex', path.read_text(), re.I):
             continue
         source = path.read_text(errors="ignore")
         published_match = re.search(r'<time[^>]+datetime=["\'](\d{4}-\d{2}-\d{2})', source, re.I)
@@ -220,7 +220,7 @@ def write_robots() -> None:
 def main() -> None:
     pages = list(DIST.rglob("*.html"))
     for page in pages:
-        if page.name == "404.html":
+        if page.name == "404.html" or re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*noindex', page.read_text(), re.I):
             continue
         apply_to_page(page)
     write_sitemap(pages)
