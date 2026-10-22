@@ -6,3 +6,7 @@ __pycache__/
 .env
 .env.*
 !.env.example
+
+# Local QA and generated evidence are not vendor source deliverables.
+review-screenshots/
+test-results/

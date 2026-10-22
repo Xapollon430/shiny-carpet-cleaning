@@ -6,7 +6,7 @@ import html
 import json
 import re
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / 'dist'
@@ -20,7 +20,7 @@ def main():
     header = re.search(r'<header\b.*?</header>', template, re.S).group()
     footer = re.search(r'<footer\b.*?</footer>', template, re.S).group()
     def document(title, description, body, noindex=False):
-        return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} — Shiny Carpet Cleaning</title><meta name="description" content="{html.escape(description,quote=True)}">{'<meta name="robots" content="noindex,follow">' if noindex else ''}<link rel="stylesheet" href="/assets/site.css?v=189"></head><body class="inner-page migration-page"><a class="skip" href="#main">Skip to content</a>{header}<main id="main"><section class="migration-content"><h1>{html.escape(title)}</h1><div class="migration-prose">{body}</div></section></main>{footer}<script src="/assets/site.js?v=55"></script></body></html>'''
+        return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} — Shiny Carpet Cleaning</title><meta name="description" content="{html.escape(description,quote=True)}">{'<meta name="robots" content="noindex,follow">' if noindex else ''}<link rel="stylesheet" href="/assets/site.css?v=190"></head><body class="inner-page migration-page"><a class="skip" href="#main">Skip to content</a>{header}<main id="main"><section class="migration-content"><h1>{html.escape(title)}</h1><div class="migration-prose">{body}</div></section></main>{footer}<script src="/assets/site.js?v=55"></script></body></html>'''
     for page in pages:
         target = DIST / page['route'].strip('/') / 'index.html'
         target.parent.mkdir(parents=True,exist_ok=True)
@@ -40,18 +40,28 @@ def main():
         source = path.read_text()
         def rewrite(match):
             href=html.unescape(match.group(2)); u=urlsplit(href)
-            if u.netloc not in ('shinycarpetcleaning.com','www.shinycarpetcleaning.com'): return match.group()
+            if u.netloc and u.netloc not in ('shinycarpetcleaning.com','www.shinycarpetcleaning.com','shiny-carpet-cleaning.exe.xyz'): return match.group()
+            if not u.netloc and not href.startswith('/'): return match.group()
             route=u.path or '/'; rule=mapping.get(route)
             if rule and int(rule['status']) == 301: result=rule['target']
             elif (DIST / route.strip('/') / 'index.html').exists(): result=route
             else: return match.group()
-            if u.query: result+=('?' if '?' not in result else '&')+u.query
-            if u.fragment and '#' not in result: result+='#'+u.fragment
+            target=urlsplit(result)
+            query='&'.join(part for part in (target.query,u.query) if part)
+            result=urlunsplit((target.scheme,target.netloc,target.path,query,target.fragment or u.fragment))
             return 'href='+match.group(1)+html.escape(result,quote=True)+match.group(1)
-        source=re.sub(r'href=([\"\'])(https?://(?:www\.)?shinycarpetcleaning\.com[^\"\']*)\1',rewrite,source)
+        # Articles can contain old relative routes as well as absolute links.
+        def retire_link(match):
+            href=html.unescape(match.group(2)); u=urlsplit(href)
+            if u.netloc and u.netloc not in ('shinycarpetcleaning.com','www.shinycarpetcleaning.com','shiny-carpet-cleaning.exe.xyz'):
+                return match.group()
+            rule=mapping.get(u.path)
+            return match.group(3) if rule and int(rule['status']) == 410 else match.group()
+        source=re.sub(r'<a\b[^>]*href=(["\'])([^"\']*)\1[^>]*>(.*?)</a>',retire_link,source,flags=re.S)
+        source=re.sub(r'href=(["\'])([^"\']*)\1',rewrite,source)
         if 'footer-policy-links' not in source:
             source=source.replace('</div></footer>','<span class="footer-policy-links"><a href="/pricing/">Pricing</a><a href="/privacy-policy/">Privacy</a><a href="/terms-and-conditions/">Terms</a></span></div></footer>')
-        source=re.sub(r'/assets/site\.css\?v=\d+','/assets/site.css?v=189',source)
+        source=re.sub(r'/assets/site\.css\?v=\d+','/assets/site.css?v=190',source)
         path.write_text(source)
     for rule in rules:
         status=int(rule['status']); assert status in (301,410), rule
