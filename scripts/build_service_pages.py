@@ -138,7 +138,7 @@ def header_markup() -> str:
 
 
 def actions_markup() -> str:
-    return f'''<div class="header-actions" aria-label="Quick actions"><a class="header-action header-call" href="tel:{PHONE_LINK}"><span>Call now</span><strong>{PHONE_DISPLAY}</strong></a><a class="header-action header-book" href="{BOOK_URL}"><span>Book now</span></a></div>'''
+    return f'''<div class="header-actions" role="group" aria-label="Quick actions"><a class="header-action header-call" href="tel:{PHONE_LINK}"><span>Call now</span><strong>{PHONE_DISPLAY}</strong></a><a class="header-action header-book" href="{BOOK_URL}"><span>Book now</span></a></div>'''
 
 
 def footer_markup() -> str:

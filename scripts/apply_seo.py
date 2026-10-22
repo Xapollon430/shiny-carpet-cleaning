@@ -176,9 +176,47 @@ def structured_block(path: Path, source: str, route: str, title: str, descriptio
     return f'<!-- SEO:STRUCTURED --><script type="application/ld+json">{payload}</script><!-- /SEO:STRUCTURED -->'
 
 
+BLOG_DESCRIPTION_OVERRIDES = {
+    "/blogs/time-saving-cleaning-tips/": "Save time on house cleaning with practical routines, a ready-to-use supply kit, room-by-room checklists, and shortcuts for everyday chores.",
+}
+
+
+def normalize_markup(source: str, route: str) -> str:
+    # Named generic divs need a semantic role for their accessible name.
+    def named_div(match: re.Match) -> str:
+        tag = match.group(0)
+        if re.search(r"\brole\s*=", tag, re.I):
+            return tag
+        role = "img" if 'class="review-stars"' in tag else "region" if 'id="service-map"' in tag else "group"
+        return tag[:-1] + f' role="{role}">'
+    source = re.sub(r'<div\b[^>]*\baria-label=["\'][^"\']*["\'][^>]*>', named_div, source, flags=re.I)
+    # Card faces are spans, so their descriptions must be phrasing content too.
+    source = re.sub(
+        r'(<span class="service-face service-back"><strong>.*?</strong>)<p>(.*?)</p>',
+        r'\1<span class="service-description">\2</span>', source, flags=re.S,
+    )
+    # Short review cards are not standalone articles and have no article headings.
+    source = re.sub(r'<article( class="review-card"[^>]*)>(.*?)</article>', r'<div\1>\2</div>', source, flags=re.S)
+    if route == "/reviews/":
+        source = source.replace('<h2 id="reviews-live-title">Over 2,500 five-star reviews.</h2>', '<h1 id="reviews-live-title">Over 2,500 five-star reviews.</h1>')
+    return source
+
+
+def remove_shared_meta(source: str) -> str:
+    # Templates and prior SEO passes may both own these tags. Replace all of them
+    # with one current block instead of retaining stale hosts or duplicate hints.
+    source = re.sub(r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>', '', source, flags=re.I)
+    source = re.sub(r'<meta\b(?=[^>]*\b(?:name|property)=["\'](?:robots|theme-color|og:[^"\']+|twitter:[^"\']+)["\'])[^>]*>', '', source, flags=re.I)
+    return source
+
+
 def apply_to_page(path: Path) -> None:
     source = path.read_text()
     route = route_for(path)
+    source = normalize_markup(source, route)
+    source = source.replace("https://shiny-carpet-cleaning-va.netlify.app", SITE)
+    if route in BLOG_DESCRIPTION_OVERRIDES:
+        source = re.sub(r'<meta\s+name="description"\s+content="[^"]*"\s*/?>', lambda _: f'<meta name="description" content="{html.escape(BLOG_DESCRIPTION_OVERRIDES[route], quote=True)}">', source, count=1, flags=re.I)
     title = text_value(source, r"<title>(.*?)</title>", "Shiny Carpet Cleaning")
     if "article-body" in source:
         title = text_value(source, r"<h1[^>]*>(.*?)</h1>", title.replace(" — Shiny Carpet Cleaning", ""))
@@ -192,6 +230,7 @@ def apply_to_page(path: Path) -> None:
     page_type = "article" if "article-body" in source else "website"
     source = re.sub(r'\s*<!-- SEO:META -->.*?<!-- /SEO:META -->', '', source, flags=re.S)
     source = re.sub(r'\s*<!-- SEO:STRUCTURED -->.*?<!-- /SEO:STRUCTURED -->', '', source, flags=re.S)
+    source = remove_shared_meta(source)
     meta = meta_block(title, description, url, image, page_type, image_alt, image_dimensions)
     structured = structured_block(path, source, route, title, description, image)
     source = source.replace("</head>", f"{meta}{structured}</head>", 1)

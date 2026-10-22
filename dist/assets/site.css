@@ -204,7 +204,7 @@ section, footer { scroll-margin-top: 5.5rem; }
 .service-front > span:last-child, .service-back > span:last-child { color: #5d676e; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .service-back { justify-content: center; gap: 1.15rem; background: #0b1a27; color: #fff; transform: rotateY(180deg); }
 .service-back strong { font-size: clamp(1.4rem,1.9vw,2rem); line-height: 1.1; letter-spacing: -.03em; font-weight: 600; }
-.service-back p { max-width: 28rem; margin: 0; color: rgba(255,255,255,.72); font-size: clamp(.95rem,1.15vw,1.08rem); line-height: 1.65; }
+.service-back .service-description { max-width: 28rem; margin: 0; color: rgba(255,255,255,.72); font-size: clamp(.95rem,1.15vw,1.08rem); line-height: 1.65; }
 .service-back > span:last-child { margin-top: auto; color: rgba(255,255,255,.46); }
 
 .service-card:focus-visible { outline: 3px solid var(--shiny-green); outline-offset: 3px; z-index: 2; }
@@ -1038,7 +1038,7 @@ section, footer { scroll-margin-top: 5.5rem; }
   .services-page .service-front strong { font-size: clamp(1.25rem,1.6vw,1.65rem); }
   .services-page .service-back { gap: .7rem; }
   .services-page .service-back strong { font-size: 1.25rem; }
-  .services-page .service-back p { font-size: .78rem; line-height: 1.45; }
+  .services-page .service-back .service-description { font-size: .78rem; line-height: 1.45; }
 
   .blog-page .learn-hero { padding: 7.5rem 4vw 2.75rem; }
   .blog-page .learn-hero-copy h1 { margin-bottom: 1.8rem; font-size: clamp(2.8rem,4.5vw,4.8rem); }
@@ -1143,7 +1143,7 @@ section, footer { scroll-margin-top: 5.5rem; }
 .reviews-page-hero p { max-width: 680px; color: rgba(255,255,255,.68); }
 .reviews-live-section { width: min(1320px,calc(100% - 8vw)); margin: 0 auto; padding: 9rem 0 5rem; }
 .reviews-live-intro { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); align-items: end; gap: clamp(2rem,6vw,6rem); margin-bottom: 2.5rem; }
-.reviews-live-intro h2 { max-width: 650px; margin: 0; font-size: clamp(2.3rem,4vw,4.4rem); font-weight: 500; line-height: .95; letter-spacing: -.055em; }
+.reviews-live-intro :is(h1, h2) { max-width: 650px; margin: 0; font-size: clamp(2.3rem,4vw,4.4rem); font-weight: 500; line-height: .95; letter-spacing: -.055em; }
 .reviews-live-copy { max-width: 580px; justify-self: end; }
 .reviews-live-copy p { margin: 0; color: #56626b; font-size: 1rem; line-height: 1.65; }
 .reviews-source-links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
@@ -1195,7 +1195,7 @@ section, footer { scroll-margin-top: 5.5rem; }
   .inner-page .inner-hero h1,
   .blog-page .learn-hero-copy h1,
   .services-page .services-title h1,
-  .reviews-page .reviews-live-intro h2,
+  .reviews-page .reviews-live-intro :is(h1, h2),
   .about-page .about-hero-copy h1,
   .location-page .location-hero-copy h1,
   .article-body .article-hero h1 {

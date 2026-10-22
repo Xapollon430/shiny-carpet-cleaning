@@ -15,6 +15,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 from PIL import Image
+from apply_seo import BLOG_DESCRIPTION_OVERRIDES
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -190,7 +191,7 @@ def main():
         article = f'''<article class="article-page"><header class="article-hero"><a class="article-back" href="/blogs/">← All articles</a><span>{html.escape(name)}</span><h1>{html.escape(title)}</h1><time datetime="{iso}">{date}</time>{media}</header><div class="article-layout"><div class="article-content">{sanitizer.get_html()}</div><aside class="article-aside"><strong>Need a professional clean?</strong><p>Tell us what needs attention and get a free estimate from the Shiny team.</p><a href="/#form">Get estimate ↗</a></aside></div></article>'''
         target = BLOG_ROOT / post["slug"]
         target.mkdir(parents=True, exist_ok=True)
-        (target / "index.html").write_text(document(title, excerpt[:155], article, "article-body"))
+        (target / "index.html").write_text(document(title, BLOG_DESCRIPTION_OVERRIDES.get(f"/blogs/{post['slug']}/", excerpt[:155]), article, "article-body"))
 
     print(f"Imported {len(posts)} posts across {len(categories)} categories")
 
